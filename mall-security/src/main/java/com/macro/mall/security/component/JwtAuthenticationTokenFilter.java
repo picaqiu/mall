@@ -1,5 +1,6 @@
 package com.macro.mall.security.component;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import com.macro.mall.security.util.JwtTokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * JWT登录授权过滤器
@@ -32,6 +35,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private String tokenHeader;
     @Value("${jwt.tokenHead}")
     private String tokenHead;
+    private String authHeader;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
